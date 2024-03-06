@@ -1,17 +1,14 @@
 #!/usr/bin/python3
-"""Display response body
-"""
+"""Sends a request to the URL and displays the body of the response."""
 
-import requests
-from sys import argv
 
 if __name__ == '__main__':
+    from sys import argv
+    from requests import get
 
     url = argv[1]
 
-    try:
-        r = requests.get(url)
-        r.raise_for_status()
-        print(r.text)
-    except:
-        print('Error code: {}'.format(r.status_code))
+    response = get(url)
+    ERR_TXT = 'Error code: {}'
+    status = response.status_code
+    print(ERR_TXT.format(status) if (status >= 400) else response.text)
